@@ -19,3 +19,11 @@ $ docker container exec -it jenkins ssh-keygen -t rsa -C ""
 $ docker exec -it jenkins  bash
 # cat /var/jenkins_home/.ssh/id_rsa.pub
 ```
+
+## django
+- djangoのサンプルプロジェクト作成
+- DBはmysql
+- c.f. https://djangoproject.jp/doc/ja/1.0/ref/django-admin.html
+```
+docker-compose run web django-admin.py startproject examplepj .
+```
