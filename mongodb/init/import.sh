@@ -1,0 +1,1 @@
+mongoimport -u www -p password --db test --collection cve --file /docker-entrypoint-initdb.d/cve.json --jsonArray
