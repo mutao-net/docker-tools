@@ -1,0 +1,42 @@
+---
+version: '3'
+services:
+  flask:
+    container_name: flask_app
+    build: .
+    ports: 
+      - "5000:5000"
+    volumes: 
+      - "./:/usr/src/app/"
+    tty: true
+    depends_on: 
+      - mysql
+    command: flask run --host 0.0.0.0 --port 5000
+    environment: 
+      TZ: Asia/Tokyo
+      FLASK_ENV: "development"
+    networks: 
+      - app_net
+
+  mysql:
+    container_name: db_container
+    build: ./mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: MYSQL_ROOT_PASSWORD
+    ports: 
+      - 3309:3306
+    volumes: 
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/conf.d:/etc/mysql/conf.d
+      - ./log/mysql:/var/log/mysql
+    networks: 
+      - app_net
+
+networks: 
+  app_net:
+    driver: bridge
